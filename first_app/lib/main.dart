@@ -7,7 +7,12 @@ void main() {
     MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.blueGrey,
-        body: GradientContainer(),
+        body: GradientContainer(
+          colors: [
+            Color.fromARGB(255, 26, 2, 80),
+            Color.fromARGB(255, 45, 7, 98),
+          ],
+        ),
       ),
     ),
   );
