@@ -1,3 +1,4 @@
+import 'package:adv_basics/questions.dart';
 import 'package:flutter/material.dart';
 
 import 'landing_page.dart';
@@ -12,6 +13,20 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  Widget? activeScreen;
+
+  void switchScreen() {
+    setState(() {
+      activeScreen = Questions();
+    });
+  }
+
+  @override
+  void initState() {
+    activeScreen = LandingPage(switchScreen: switchScreen);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,7 +40,7 @@ class _QuizState extends State<Quiz> {
               end: Alignment.bottomRight,
             ),
           ),
-          child: LandingPage(),
+          child: activeScreen,
         ),
       ),
     );

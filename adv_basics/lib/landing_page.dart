@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 class LandingPage extends StatelessWidget {
   const LandingPage({
     super.key,
+    required this.switchScreen,
   });
 
-  onPress() {}
+  final void Function() switchScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,9 @@ class LandingPage extends StatelessWidget {
             height: 20,
           ),
           OutlinedButton.icon(
-            onPressed: onPress,
+            onPressed: () {
+              switchScreen();
+            },
             style: OutlinedButton.styleFrom(
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(

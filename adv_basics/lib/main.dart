@@ -1,23 +1,6 @@
+import 'package:adv_basics/quiz.dart';
 import 'package:flutter/material.dart';
 
-import 'landing_page.dart';
-
 void main() {
-  runApp(
-    MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.purple,
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.deepPurple, Colors.blueGrey],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: LandingPage(),
-        ),
-      ),
-    ),
-  );
+  runApp(Quiz());
 }
