@@ -1,4 +1,4 @@
-import 'package:adv_basics/questions.dart';
+import 'package:adv_basics/questions_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'landing_page.dart';
@@ -17,7 +17,7 @@ class _QuizState extends State<Quiz> {
 
   void switchScreen() {
     setState(() {
-      activeScreen = Questions();
+      activeScreen = QuestionsScreen();
     });
   }
 
