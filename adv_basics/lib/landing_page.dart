@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({
@@ -22,7 +23,10 @@ class LandingPage extends StatelessWidget {
             height: 20,
           ),
           Text(
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            style: GoogleFonts.lato(
+              fontSize: 24,
+              color: const Color.fromARGB(255, 221, 184, 249),
+            ),
             'Learn Flutter the fun way',
           ),
           SizedBox(
