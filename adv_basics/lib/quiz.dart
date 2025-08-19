@@ -25,7 +25,6 @@ class _QuizState extends State<Quiz> {
         activeScreen = ResultsScreen(
           selectedAnswers: selectedAnswers,
         );
-        selectedAnswers.clear();
       });
     }
   }
