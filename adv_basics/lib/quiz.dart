@@ -1,5 +1,6 @@
 import 'package:adv_basics/questions_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:adv_basics/data/questions.dart';
 
 import 'landing_page.dart';
 
@@ -18,6 +19,12 @@ class _QuizState extends State<Quiz> {
 
   void chooseAnswer(String answer) {
     selectedAnswers.add(answer);
+    if (selectedAnswers.length == questions.length) {
+      setState(() {
+        activeScreen = LandingPage(switchScreen: switchScreen);
+        selectedAnswers.clear();
+      });
+    }
   }
 
   void switchScreen() {
