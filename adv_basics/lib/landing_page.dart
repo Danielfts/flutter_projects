@@ -27,7 +27,7 @@ class LandingPage extends StatelessWidget {
               fontSize: 24,
               color: const Color.fromARGB(255, 221, 184, 249),
             ),
-            'Learn Flutter the fun way',
+            'Hello World 123!',
           ),
           SizedBox(
             height: 20,
