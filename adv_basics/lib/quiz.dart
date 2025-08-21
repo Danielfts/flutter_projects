@@ -18,26 +18,28 @@ class _QuizState extends State<Quiz> {
   final List<String> selectedAnswers = [];
   Widget? activeScreen;
 
+  void startQuiz() {
+    setState(() {
+      activeScreen = QuestionsScreen(onSelectAnswer: chooseAnswer);
+      selectedAnswers.clear();
+    });
+  }
+
   void chooseAnswer(String answer) {
     selectedAnswers.add(answer);
     if (selectedAnswers.length == questions.length) {
       setState(() {
         activeScreen = ResultsScreen(
           selectedAnswers: selectedAnswers,
+          startQuiz: startQuiz,
         );
       });
     }
   }
 
-  void switchScreen() {
-    setState(() {
-      activeScreen = QuestionsScreen(onSelectAnswer: chooseAnswer);
-    });
-  }
-
   @override
   void initState() {
-    activeScreen = LandingPage(switchScreen: switchScreen);
+    activeScreen = LandingPage(switchScreen: startQuiz);
     super.initState();
   }
 

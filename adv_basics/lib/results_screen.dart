@@ -1,10 +1,16 @@
 import 'package:adv_basics/data/questions.dart';
 import 'package:adv_basics/questions_summary.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ResultsScreen extends StatelessWidget {
-  const ResultsScreen({super.key, required this.selectedAnswers});
+  const ResultsScreen({
+    super.key,
+    required this.selectedAnswers,
+    required this.startQuiz,
+  });
 
+  final void Function() startQuiz;
   final List<String> selectedAnswers;
 
   List<Map<String, Object>> getSummaryData() {
@@ -22,6 +28,12 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final summaryData = getSummaryData();
+    final numTotalQuestions = questions.length;
+    final numCorrectQuestions = summaryData.where((item) {
+      return item['correct_answer'] == item['user_answer'];
+    }).length;
+
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -29,15 +41,28 @@ class ResultsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('You answered X out of Y questions correctly!'),
+            Text(
+              textAlign: TextAlign.center,
+              style: GoogleFonts.lato(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+              'You answered $numCorrectQuestions out of $numTotalQuestions questions correctly!',
+            ),
             SizedBox(
               height: 30,
             ),
-            QuestionsSummary(data: getSummaryData()),
+            QuestionsSummary(data: summaryData),
             SizedBox(
               height: 30,
             ),
-            TextButton(onPressed: () {}, child: Text('Restart Quiz!')),
+            TextButton.icon(
+              style: TextButton.styleFrom(foregroundColor: Colors.white),
+              onPressed: startQuiz,
+              icon: Icon(Icons.refresh),
+              label: Text('Restart Quiz!'),
+            ),
           ],
         ),
       ),
