@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onSubmit});
+
+  final void Function(Expense e) onSubmit;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -33,8 +35,10 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   void _submitExpenseData() {
-    var titleEmpty = _titleController.text.trim().isEmpty;
-    var amountInvalid = double.tryParse(_amountController.text) == null;
+    var title = _titleController.text.trim();
+    var titleEmpty = title.isEmpty;
+    var amount = double.tryParse(_amountController.text);
+    var amountInvalid = amount == null;
     var dateInvalid = _selectedDate == null;
     if (titleEmpty || amountInvalid || dateInvalid) {
       showDialog(
@@ -56,6 +60,15 @@ class _NewExpenseState extends State<NewExpense> {
       );
       return;
     }
+    widget.onSubmit(
+      Expense(
+        amount: amount,
+        date: _selectedDate!,
+        title: title,
+        category: _selectedCategory,
+      ),
+    );
+    Navigator.pop(context);
   }
 
   @override
