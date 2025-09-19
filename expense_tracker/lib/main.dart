@@ -1,31 +1,28 @@
-import 'package:expense_tracker/expenses.dart';
 import 'package:flutter/material.dart';
 
+import 'package:expense_tracker/widgets/expenses.dart';
+
 var kColorScheme = ColorScheme.fromSeed(
-  seedColor: Color.fromARGB(255, 96, 59, 181),
+  seedColor: const Color.fromARGB(255, 96, 59, 181),
 );
 
 var kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  seedColor: Color.fromARGB(255, 5, 99, 125),
+  seedColor: const Color.fromARGB(255, 5, 99, 125),
 );
 
 void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  runApp(
+    MaterialApp(
       darkTheme: ThemeData.dark().copyWith(
+        useMaterial3: true,
         colorScheme: kDarkColorScheme,
-        cardTheme: CardThemeData().copyWith(
+        cardTheme: const CardThemeData().copyWith(
           color: kDarkColorScheme.secondaryContainer,
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -35,15 +32,18 @@ class MyApp extends StatelessWidget {
         ),
       ),
       theme: ThemeData().copyWith(
+        useMaterial3: true,
         colorScheme: kColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
           backgroundColor: kColorScheme.onPrimaryContainer,
           foregroundColor: kColorScheme.primaryContainer,
-          centerTitle: true,
         ),
-        cardTheme: CardThemeData().copyWith(
+        cardTheme: const CardThemeData().copyWith(
           color: kColorScheme.secondaryContainer,
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -54,11 +54,12 @@ class MyApp extends StatelessWidget {
           titleLarge: TextStyle(
             fontWeight: FontWeight.bold,
             color: kColorScheme.onSecondaryContainer,
-            fontSize: 14,
+            fontSize: 16,
           ),
         ),
       ),
-      home: Expenses(),
-    );
-  }
+      // themeMode: ThemeMode.system, // default
+      home: const Expenses(),
+    ),
+  );
 }
