@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 
 class MealsScreen extends StatelessWidget {
-  MealsScreen({super.key, required this.meals, required this.title});
+  const MealsScreen({super.key, required this.meals, required this.title});
 
   final String title;
   final List<Meal> meals;
@@ -10,9 +10,27 @@ class MealsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const whiteText = TextStyle(color: Colors.white);
-    var noDataText = const Text(
-      'There are no meals!',
-      style: whiteText,
+    var noDataText = Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'There are no meals!',
+            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Text(
+            'Try selecting a different category',
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+        ],
+      ),
     );
     var mealList = ListView.builder(
       itemCount: meals.length,
