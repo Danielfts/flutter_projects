@@ -4,9 +4,9 @@ import 'package:meals/screens/meal_details.dart';
 import 'package:meals/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, required this.meals, required this.title});
+  const MealsScreen({super.key, required this.meals, this.title});
 
-  final String title;
+  final String? title;
   final List<Meal> meals;
 
   @override
@@ -23,7 +23,6 @@ class MealsScreen extends StatelessWidget {
       );
     }
 
-    const whiteText = TextStyle(color: Colors.white);
     var noDataText = Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -54,11 +53,14 @@ class MealsScreen extends StatelessWidget {
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: meals.isNotEmpty ? mealList : noDataText,
-    );
+    var body = meals.isNotEmpty ? mealList : noDataText;
+    return title == null
+        ? body
+        : Scaffold(
+            appBar: AppBar(
+              title: Text(title!),
+            ),
+            body: body,
+          );
   }
 }
