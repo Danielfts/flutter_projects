@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
+import 'package:meals/screens/meal_details.dart';
 import 'package:meals/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
@@ -10,6 +11,18 @@ class MealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void navigateToDetail(Meal meal) {
+      Navigator.of(
+        context,
+      ).push(
+        MaterialPageRoute(
+          builder: (_) => MealDetails(
+            meal: meal,
+          ),
+        ),
+      );
+    }
+
     const whiteText = TextStyle(color: Colors.white);
     var noDataText = Center(
       child: Column(
@@ -37,6 +50,7 @@ class MealsScreen extends StatelessWidget {
       itemCount: meals.length,
       itemBuilder: (ctx, index) => MealItem(
         meal: meals[index],
+        navigateToDetail: navigateToDetail,
       ),
     );
 
