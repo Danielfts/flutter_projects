@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:meals/screens/main_drawer.dart';
 import 'package:meals/screens/tabs.dart';
 
-class Filters extends StatefulWidget {
-  const Filters({super.key});
+enum Filter { glutenFree, lactoseFree, vegetarian, vegan }
 
+class Filters extends StatefulWidget {
+  const Filters({super.key, required this.currentFilters});
+
+  final Map<Filter, bool> currentFilters;
   @override
   State<Filters> createState() => _FiltersState();
 }
@@ -14,6 +17,16 @@ class _FiltersState extends State<Filters> {
   var _lactoseFreeFilterSet = false;
   var _vegetarianFilterSet = false;
   var _veganFilterSet = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _gluttenFreeFilterSet = widget.currentFilters[Filter.glutenFree]!;
+    _lactoseFreeFilterSet = widget.currentFilters[Filter.lactoseFree]!;
+    _vegetarianFilterSet = widget.currentFilters[Filter.vegetarian]!;
+    _veganFilterSet = widget.currentFilters[Filter.vegan]!;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,39 +43,51 @@ class _FiltersState extends State<Filters> {
       //     }
       //   },
       // ),
-      body: Column(
-        children: [
-          styledSwitchTile(
-            'Glutten Free',
-            'Only include glutten free meals',
-            (
+      body: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop) return;
+          Navigator.of(context).pop({
+            Filter.glutenFree: _gluttenFreeFilterSet,
+            Filter.lactoseFree: _lactoseFreeFilterSet,
+            Filter.vegetarian: _vegetarianFilterSet,
+            Filter.vegan: _veganFilterSet,
+          });
+        },
+        child: Column(
+          children: [
+            styledSwitchTile(
+              'Glutten Free',
+              'Only include glutten free meals',
+              (
+                bool value,
+              ) {
+                _gluttenFreeFilterSet = value;
+              },
+              _gluttenFreeFilterSet,
+            ),
+            styledSwitchTile(
+              'Lactose free',
+              'Only include lactose free meals',
+              (
+                bool value,
+              ) {
+                _lactoseFreeFilterSet = value;
+              },
+              _lactoseFreeFilterSet,
+            ),
+            styledSwitchTile('Vegetarian', 'Only include vegetarian meals', (
               bool value,
             ) {
-              _gluttenFreeFilterSet = value;
-            },
-            _gluttenFreeFilterSet,
-          ),
-          styledSwitchTile(
-            'Lactose free',
-            'Only include lactose free meals',
-            (
+              _vegetarianFilterSet = value;
+            }, _vegetarianFilterSet),
+            styledSwitchTile('Vegan', 'Only include vegan meals', (
               bool value,
             ) {
-              _lactoseFreeFilterSet = value;
-            },
-            _lactoseFreeFilterSet,
-          ),
-          styledSwitchTile('Vegetarian', 'Only include vegetarian meals', (
-            bool value,
-          ) {
-            _vegetarianFilterSet = value;
-          }, _vegetarianFilterSet),
-          styledSwitchTile('Vegan', 'Only include vegan meals', (
-            bool value,
-          ) {
-            _veganFilterSet = value;
-          }, _veganFilterSet),
-        ],
+              _veganFilterSet = value;
+            }, _veganFilterSet),
+          ],
+        ),
       ),
     );
   }
