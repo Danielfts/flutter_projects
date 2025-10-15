@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/models/meal.dart';
+import 'package:meals/providers/favorites_provider.dart';
 
-class MealDetails extends StatelessWidget {
+class MealDetails extends ConsumerWidget {
   const MealDetails({
     super.key,
     required this.meal,
@@ -11,7 +13,7 @@ class MealDetails extends StatelessWidget {
   final Meal meal;
   final void Function(Meal meal) onToggleFavourite;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var theme = Theme.of(
       context,
     );
@@ -21,7 +23,15 @@ class MealDetails extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              onToggleFavourite(meal);
+              final wasAdded = ref
+                  .read(favoriteMealsProvider.notifier)
+                  .toggleMealFavoriteStatus(meal);
+              var messenger = ScaffoldMessenger.of(context);
+              messenger.clearSnackBars();
+              final message = wasAdded
+                  ? 'Meal added to favorites!'
+                  : 'Meal removed from favorites';
+              messenger.showSnackBar(SnackBar(content: Text(message)));
             },
             icon: Icon(Icons.star),
           ),
